@@ -1,0 +1,42 @@
+{
+    "os": "Windows-10-10.0.22621-SP0",
+    "python": "3.10.8",
+    "heartbeatAt": "2023-01-09T15:38:54.563276",
+    "startedAt": "2023-01-09T15:38:53.762724",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "c:\\Users\\anned\\OneDrive - Danmarks Tekniske Universitet\\Uni\\MLOps\\mnist\\src\\models\\train_model.py",
+    "codePath": "src\\models\\train_model.py",
+    "git": {
+        "remote": "git@github.com:AnneKDesler/mnist.git",
+        "commit": "c2b65317a30c5e54c209fe8beb7b55288a95145f"
+    },
+    "email": "s194333@dtu.dk",
+    "root": "C:/Users/anned/OneDrive - Danmarks Tekniske Universitet/Uni/MLOps/mnist",
+    "host": "LAPTOP-T21B3P95",
+    "username": "anned",
+    "executable": "C:\\Users\\anned\\anaconda3\\envs\\mlops\\python.exe",
+    "cpu_count": 4,
+    "cpu_count_logical": 8,
+    "cpu_freq": {
+        "current": 1609.0,
+        "min": 0.0,
+        "max": 2112.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 1609.0,
+            "min": 0.0,
+            "max": 2112.0
+        }
+    ],
+    "disk": {
+        "total": 237.22753524780273,
+        "used": 136.1762237548828
+    },
+    "memory": {
+        "total": 15.725425720214844
+    }
+}
