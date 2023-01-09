@@ -90,3 +90,8 @@ target/
 
 #logs
 lightning_logs/
+
+#
+wandb/
+
+checkpoints/

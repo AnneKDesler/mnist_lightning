@@ -32,15 +32,16 @@ def train(cfg):
 
     test_set = torch.utils.data.TensorDataset(torch.tensor(test["images"]).float(), torch.tensor(test["labels"]))
     train_set = torch.utils.data.ConcatDataset(train_sets)
-    #trainloader = torch.utils.data.DataLoader(train_set, batch_size=batch_size, shuffle=True)
-    #testloader = torch.utils.data.DataLoader(test_set, batch_size=batch_size, shuffle=True)
-    trainloader = torch.utils.data.DataLoader(train_set)
-    testloader = torch.utils.data.DataLoader(test_set)
+    trainloader = torch.utils.data.DataLoader(train_set, batch_size=batch_size, shuffle=True)
+    testloader = torch.utils.data.DataLoader(test_set, batch_size=batch_size, shuffle=True)
+    #trainloader = torch.utils.data.DataLoader(train_set)
+    #testloader = torch.utils.data.DataLoader(test_set)
     
 
     model = MyAwesomeModel(lr)
-    trainer = pl.Trainer(limit_train_batches=100, max_epochs=epochs, default_root_dir = 'models')
-    trainer.fit(model=model, train_dataloaders=trainloader)
+    #trainer = pl.Trainer(limit_train_batches=0.2, max_epochs=epochs, default_root_dir = 'models', logger=pl.loggers.WandbLogger(project="mnist"))
+    trainer = pl.Trainer(limit_train_batches=0.2, max_epochs=epochs, default_root_dir = 'models', logger=pl.loggers.WandbLogger(project="mnist"), log_every_n_steps = 1)
+    trainer.fit(model=model, train_dataloaders=trainloader, val_dataloaders=testloader)
 
 
 if __name__ == "__main__":

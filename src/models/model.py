@@ -33,8 +33,19 @@ class MyAwesomeModel(pl.LightningModule):
         images, labels = batch
         output = self.forward(images)
         loss = self.criterion(output, labels)
-        self.log("train_loss", loss)
+        self.log("train_loss", loss)#, on_step=True, on_epoch=True, prog_bar=True, logger=True)
+        acc = (labels == output.argmax(dim=-1)).float().mean()
+        self.log("train_acc", acc)#, on_step=True, on_epoch=True, prog_bar=True, logger=True)
         return loss
+
+    def validation_step(self, batch, batch_idx):
+        images, labels = batch
+        output = self.forward(images)
+        loss = self.criterion(output, labels)
+        self.log("val_loss", loss)#, on_step=True, on_epoch=True, prog_bar=True, logger=True)
+        acc = (labels == output.argmax(dim=-1)).float().mean()
+        self.log("val_acc", acc)#, on_step=True, on_epoch=True, prog_bar=True, logger=True)
+
 
     def configure_optimizers(self):
         optimizer = optim.Adam(self.parameters(), lr=self.lr)
