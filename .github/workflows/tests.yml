@@ -5,12 +5,13 @@ on: [push]
 jobs:
   build:
 
-    runs-on: [ubuntu-latest, windows-latest]
     strategy:
       matrix:
         python-version: ["3.10"]
+        my_os: [ubuntu-latest, windows-latest]
 
     steps:
+      - runs-on: ${{ matrix.my_os }}
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
