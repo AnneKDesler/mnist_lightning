@@ -18,29 +18,19 @@ def train(cfg):
 
     # TODO: Implement training loop here
     
-    train_sets = []
-    for i in range(5):
-        train = np.load("data/processed/" + f"train_{i}.npz")
-        train_sets.append(torch.utils.data.TensorDataset(torch.tensor(train["images"]).float(), torch.tensor(train["labels"])))
-        
-    
-    test = np.load("data/processed/test.npz")
-    
     lr = cfg.lr
     batch_size = cfg.batch_size
     epochs = cfg.epochs
 
-    test_set = torch.utils.data.TensorDataset(torch.tensor(test["images"]).float(), torch.tensor(test["labels"]))
-    train_set = torch.utils.data.ConcatDataset(train_sets)
+    train_set = torch.load("data/processed/train.pt")
+    test_set = torch.load("data/processed/test.pt")
+
     trainloader = torch.utils.data.DataLoader(train_set, batch_size=batch_size, shuffle=True)
     testloader = torch.utils.data.DataLoader(test_set, batch_size=batch_size, shuffle=True)
-    #trainloader = torch.utils.data.DataLoader(train_set)
-    #testloader = torch.utils.data.DataLoader(test_set)
-    
 
     model = MyAwesomeModel(lr)
     #trainer = pl.Trainer(limit_train_batches=0.2, max_epochs=epochs, default_root_dir = 'models', logger=pl.loggers.WandbLogger(project="mnist"))
-    trainer = pl.Trainer(limit_train_batches=0.2, max_epochs=epochs, default_root_dir = 'models', logger=pl.loggers.WandbLogger(project="mnist"), log_every_n_steps = 1)
+    trainer = pl.Trainer(max_epochs=epochs, default_root_dir = 'models', logger=pl.loggers.WandbLogger(project="mnist"), log_every_n_steps = 1)
     trainer.fit(model=model, train_dataloaders=trainloader, val_dataloaders=testloader)
 
 

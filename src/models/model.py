@@ -1,3 +1,4 @@
+import torch
 from torch import nn, optim
 import torch.nn.functional as F
 import pytorch_lightning as pl
@@ -5,7 +6,7 @@ from omegaconf import OmegaConf
 import argparse
 
 class MyAwesomeModel(pl.LightningModule):
-    def __init__(self, lr):
+    def __init__(self, lr=1e-2):
         super().__init__()
         self.criterion = nn.NLLLoss()
         self.lr = lr
@@ -17,7 +18,9 @@ class MyAwesomeModel(pl.LightningModule):
         self.fc2 = nn.Linear(in_features=100, out_features=10)
 
     def forward(self, x):
-
+        if x.shape[1] != 1 or x.shape[2] != 28 or x.shape[3] != 28:
+            raise ValueError('Expected each sample to have shape [1, 28, 28]')
+        
         x = F.relu(self.conv1(x))
         x = F.relu(self.conv2(x))
         x = x.view(x.shape[0], -1)

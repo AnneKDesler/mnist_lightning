@@ -16,7 +16,7 @@ def main(input_filepath, output_filepath):
     """
     logger = logging.getLogger(__name__)
     logger.info('making final data set from raw data')
-
+    train_sets = []
     for i in range(5):
         data_train = np.load(input_filepath + "/corruptmnist/train_{}.npz".format(i))
         images = data_train["images"]
@@ -25,7 +25,11 @@ def main(input_filepath, output_filepath):
         images = (images - mean)/std
         images = images[:, np.newaxis,:,:]
         labels = data_train["labels"]
+        train_sets.append(torch.utils.data.TensorDataset(torch.tensor(images).float(), torch.tensor(labels)))
+        
         np.savez(output_filepath + "train_{}.npz".format(i), images=images, labels=labels)
+    train_set = torch.utils.data.ConcatDataset(train_sets)
+    torch.save(train_set, output_filepath + 'train.pt')
 
     data_test = np.load(input_filepath + "/corruptmnist/test.npz")
     images = data_test["images"]
@@ -34,7 +38,9 @@ def main(input_filepath, output_filepath):
     images = (images - mean)/std
     images = images[:, np.newaxis,:,:]
     labels = data_test["labels"]
-    np.savez(output_filepath + "test.npz", images=images, labels=labels)
+    test_set = torch.utils.data.TensorDataset(torch.tensor(images).float(), torch.tensor(labels))
+    torch.save(test_set, output_filepath + 'test.pt')
+
 
 
 

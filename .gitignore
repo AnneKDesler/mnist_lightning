@@ -95,3 +95,4 @@ lightning_logs/
 wandb/
 
 checkpoints/
+/data
