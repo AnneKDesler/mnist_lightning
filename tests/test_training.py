@@ -4,7 +4,7 @@ from tests import _PATH_DATA
 import pytest
 import os
 
-@pytest.mark.skipif(not os.path.exists(_PATH_DATA + "/processed/train.pt"), reason="Data files not found")
+#@pytest.mark.skipif(not os.path.exists(_PATH_DATA + "/processed/train.pt"), reason="Data files not found")
 def test_training():
 
     train_set = torch.load(_PATH_DATA + "/processed/train.pt")
