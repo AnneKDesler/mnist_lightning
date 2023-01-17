@@ -25,8 +25,8 @@ def train(cfg):
     train_set = torch.load("data/processed/train.pt")
     test_set = torch.load("data/processed/test.pt")
 
-    trainloader = torch.utils.data.DataLoader(train_set, batch_size=batch_size, shuffle=True)
-    testloader = torch.utils.data.DataLoader(test_set, batch_size=batch_size, shuffle=True)
+    trainloader = torch.utils.data.DataLoader(train_set, num_workers=8, batch_size=batch_size, shuffle=True)
+    testloader = torch.utils.data.DataLoader(test_set, num_workers=8, batch_size=batch_size)
 
     model = MyAwesomeModel(lr)
     #trainer = pl.Trainer(limit_train_batches=0.2, max_epochs=epochs, default_root_dir = 'models', logger=pl.loggers.WandbLogger(project="mnist"))

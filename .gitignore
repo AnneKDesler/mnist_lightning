@@ -96,3 +96,5 @@ wandb/
 
 checkpoints/
 /data
+
+give_me_a_unique_name/
